@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html {
+  font-family: sans-serif;
+}
+h2 {
+  margin-top: 0px;
+}
+.page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 16px;
+  padding: 16px;
+  justify-content: center;
+
+  @media (min-width: 848px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1264px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1680px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.card {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #EEE;
+  padding: 16px;
+  margin-bottom: 8px;
+  max-width: 400px;
+  height: 300px;
+}

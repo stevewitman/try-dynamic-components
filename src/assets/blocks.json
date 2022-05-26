@@ -1,0 +1,22 @@
+[
+  {
+    "blockType": "advertisement",
+    "inputData": {
+      "adUrl": "https://picsum.photos/398/298"
+    }
+  },
+  {
+    "blockType": "poll",
+    "inputData": {
+      "pollQuestion": "Are you using Angular 14 yet?",
+      "pollAnswers": ["yes", "no"]
+    }
+  },
+  {
+    "blockType": "post",
+    "inputData": {
+      "postTitle": "Angular 14 Post",
+      "postDescription": "Angualar 14 is here with Standalone Components, Typed Forms and more..."
+    }
+  }
+]
