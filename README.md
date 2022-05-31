@@ -30,3 +30,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 https://github.com/mavento/angular-dynamic-component-json
 https://stackblitz.com/edit/angular-dynamic-component-json?file=src%2Fapp%2Fapp.component.ts
+
+possible block types for newsfeed demo
+news top story
+news article
+poll
+advertisement
+events calendar
+jobs

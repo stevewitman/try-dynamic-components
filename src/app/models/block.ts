@@ -1,4 +1,4 @@
 export interface Block {
-  blockType: string;
+  blockName: string;
   inputData: {};
 }

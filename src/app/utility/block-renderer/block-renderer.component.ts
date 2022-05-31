@@ -5,10 +5,11 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { BlockNotFoundComponent } from '../../blocks/block-not-found/block-not-found.component';
-import { AdvertisementComponent } from '../../blocks/advertisement/advertisement.component';
-import { PollComponent } from '../../blocks/poll/poll.component';
-import { PostComponent } from '../../blocks/post/post.component';
+import { Block } from 'src/app/models/block';
+// import { BlockNotFoundComponent } from '../../blocks/block-not-found/block-not-found.component';
+// import { AdvertisementComponent } from '../../blocks/advertisement/advertisement.component';
+// import { PollComponent } from '../../blocks/poll/poll.component';
+// import { PostComponent } from '../../blocks/post/post.component';
 import { BlocksService } from '../../services/blocks.service';
 
 abstract class DynamicComponent {
@@ -27,37 +28,63 @@ export class BlockRendererComponent implements OnInit {
   constructor(private blocksService: BlocksService) {}
 
   ngOnInit() {
+    
+  }
+
+  loadComponents() {
     this.blocksService.getAllBlocks().subscribe((blocks) => {
       for (const block of blocks) {
-        if (block.blockType && block.inputData) {
-          let componentType = this.getType(block.blockType);
-          let componentRef: ComponentRef<{}> =
-            this.blockContainer.createComponent(componentType);
-          let instance = <DynamicComponent>componentRef.instance;
-          console.log(instance);
-
-          instance.inputData = block.inputData;
+        if (block.blockName && block.inputData) {
+          this.loadComponent(block);
         }
       }
     });
   }
 
-  getType(typeName: string) {
-    switch (typeName) {
+  async loadComponent(block: Block) {
+    switch (block.blockName) {
       case 'advertisement': {
-        return AdvertisementComponent;
+        const lazyComponent = await import(
+          `../../blocks/${block.blockName}/${block.blockName}.component`
+        );
+        let componentRef: ComponentRef<DynamicComponent> =
+          this.blockContainer.createComponent(
+            lazyComponent.AdvertisementComponent
+          );
+        // pass input data into the component instance
+        componentRef.instance.inputData = block.inputData;
         break;
       }
       case 'poll': {
-        return PollComponent;
+        const lazyComponent = await import(
+          `../../blocks/${block.blockName}/${block.blockName}.component`
+        );
+        let componentRef: ComponentRef<DynamicComponent> =
+          this.blockContainer.createComponent(lazyComponent.PollComponent);
+        // pass input data into the component instance
+        componentRef.instance.inputData = block.inputData;
         break;
       }
       case 'post': {
-        return PostComponent;
+        const lazyComponent = await import(
+          `../../blocks/${block.blockName}/${block.blockName}.component`
+        );
+        let componentRef: ComponentRef<DynamicComponent> =
+          this.blockContainer.createComponent(lazyComponent.PostComponent);
+        // pass input data into the component instance
+        componentRef.instance.inputData = block.inputData;
         break;
       }
       default: {
-        return BlockNotFoundComponent;
+        
+        const lazyComponent = await import(
+          `../../blocks/block-not-found/block-not-found.component`
+        );
+        let componentRef: ComponentRef<DynamicComponent> =
+          this.blockContainer.createComponent(lazyComponent.BlockNotFoundComponent);
+        // pass input data into the component instance
+        const missingBlockData = { missingBlock: block.blockName };
+        componentRef.instance.inputData = missingBlockData;
         break;
       }
     }
